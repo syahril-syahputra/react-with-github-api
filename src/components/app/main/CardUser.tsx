@@ -14,7 +14,7 @@ interface IProps {
     login: string;
 }
 export default function CardUser(props: IProps) {
-    const [status, setstatus] = useState<"idle" | "finish">("idle");
+    const [status, setstatus] = useState<"idle" | "error" | "finish">("idle");
     const [isLoading, setisLoading] = useState(false);
     const [repo, setrepo] = useState<any>([]);
     const [isShowRepo, setisShowRepo] = useState(false);
@@ -25,8 +25,10 @@ export default function CardUser(props: IProps) {
             // console.log(fetch);
             setrepo(fetch.data);
         } catch (error) {
+            setstatus("error");
             alert(error);
         } finally {
+            setstatus("finish");
             setisLoading(false);
         }
     };
